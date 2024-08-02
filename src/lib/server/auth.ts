@@ -12,9 +12,7 @@ interface JWTPayload extends jose.JWTPayload {
 export const authUser = async (event: RequestEvent) => {
   const token = event.cookies.get('CF_Authorization');
 
-    console.log("cf check cancelled")
   if (token) {
-    console.log("cf check triggered")
     try {
       const JWKS = jose.createRemoteJWKSet(new URL(CERTS_URL))
       const { payload } = await jose.jwtVerify<JWTPayload>(token, JWKS, {

@@ -5,16 +5,15 @@
   import Home from "lucide-svelte/icons/house";
   import ShoppingCart from "lucide-svelte/icons/shopping-cart";
   import Menu from "lucide-svelte/icons/menu";
-  import Package2 from "lucide-svelte/icons/package-2";
   import Search from "lucide-svelte/icons/search";
   import Users from "lucide-svelte/icons/users";
-
   import { Badge } from "$lib/components/ui/badge/index.js";
   import { Button } from "$lib/components/ui/button/index.js";
   import * as Card from "$lib/components/ui/card/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import * as Sheet from "$lib/components/ui/sheet/index.js";
+  import { PUBLIC_CLOUDFLARE_TEAM_DOMAIN } from "$env/static/public";
 </script>
 
 <div
@@ -51,7 +50,7 @@
           </a>
           <a
             href="##"
-            class="text-muted text-primary hover:text-primary flex items-center gap-3 rounded-lg px-3 py-2 transition-all"
+            class="text-muted-foreground hover:text-primary hover:text-primary flex items-center gap-3 rounded-lg px-3 py-2 transition-all"
           >
             <Flag class="h-4 w-4" />
             Flags
@@ -71,19 +70,6 @@
             Environments
           </a>
         </nav>
-      </div>
-      <div class="mt-auto p-4">
-        <Card.Root>
-          <Card.Header class="p-2 pt-0 md:p-4">
-            <Card.Title>Upgrade to Pro</Card.Title>
-            <Card.Description>
-              Unlock all features and get unlimited access to our support team.
-            </Card.Description>
-          </Card.Header>
-          <Card.Content class="p-2 pt-0 md:p-4 md:pt-0">
-            <Button size="sm" class="w-full">Upgrade</Button>
-          </Card.Content>
-        </Card.Root>
       </div>
     </div>
   </div>
@@ -105,7 +91,7 @@
         </Sheet.Trigger>
         <Sheet.Content side="left" class="flex flex-col">
           <nav class="grid gap-2 text-lg font-medium">
-            <a href="##" class="flex items-center gap-2 text-lg font-semibold">
+            <a href="/" class="flex items-center gap-2 text-lg font-semibold">
               <Flag class="h-6 w-6" />
               <span class="">FlagShip</span>
             </a>
@@ -198,7 +184,7 @@
           <DropdownMenu.Item>Settings</DropdownMenu.Item>
           <DropdownMenu.Item>Support</DropdownMenu.Item>
           <DropdownMenu.Separator />
-          <DropdownMenu.Item>Logout</DropdownMenu.Item>
+          <DropdownMenu.Item><a href="{PUBLIC_CLOUDFLARE_TEAM_DOMAIN}/cdn-cgi/access/logout">Logout</a></DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </header>
