@@ -14,6 +14,8 @@
   import { Input } from "$lib/components/ui/input/index.js";
   import * as Sheet from "$lib/components/ui/sheet/index.js";
   import { PUBLIC_CLOUDFLARE_TEAM_DOMAIN } from "$env/static/public";
+
+  import "../../app.css";
 </script>
 
 <div
