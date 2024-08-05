@@ -98,7 +98,7 @@
               <span class="">FlagShip</span>
             </a>
             <a
-              href="##"
+              href="/dashboard"
               class="text-muted-foreground hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
             >
               <Home class="h-5 w-5" />
@@ -186,7 +186,11 @@
           <DropdownMenu.Item>Settings</DropdownMenu.Item>
           <DropdownMenu.Item>Support</DropdownMenu.Item>
           <DropdownMenu.Separator />
-          <DropdownMenu.Item><a href="{PUBLIC_CLOUDFLARE_TEAM_DOMAIN}/cdn-cgi/access/logout">Logout</a></DropdownMenu.Item>
+          <DropdownMenu.Item
+            ><a href="{PUBLIC_CLOUDFLARE_TEAM_DOMAIN}/cdn-cgi/access/logout"
+              >Logout</a
+            ></DropdownMenu.Item
+          >
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </header>
