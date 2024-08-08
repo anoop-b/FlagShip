@@ -11,7 +11,9 @@
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "deploy": "bun run build && wrangler pages deploy",
-    "cf-typegen": "wrangler types && mv worker-configuration.d.ts src/"
+    "cf-typegen": "wrangler types && mv worker-configuration.d.ts src/",
+    "migrate": "bunx drizzle-kit migrate",
+    "generate": "bunx drizzle-kit generate"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.2.2",
@@ -21,6 +23,7 @@
     "@tailwindcss/typography": "^0.5.13",
     "@types/eslint": "^9.6.0",
     "autoprefixer": "^10.4.19",
+    "drizzle-kit": "^0.23.2",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.43.0",
@@ -40,6 +43,7 @@
   "dependencies": {
     "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",
+    "drizzle-orm": "^0.32.2",
     "jose": "^5.6.3",
     "lucide-svelte": "^0.418.0",
     "svelte-radix": "^1.1.0",
