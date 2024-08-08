@@ -187,7 +187,7 @@
           <DropdownMenu.Item>Support</DropdownMenu.Item>
           <DropdownMenu.Separator />
           <DropdownMenu.Item
-            ><a href="{PUBLIC_CLOUDFLARE_TEAM_DOMAIN}/cdn-cgi/access/logout"
+            ><a href="{PUBLIC_CLOUDFLARE_TEAM_DOMAIN}/cdn-cgi/access/logout&returnTo=${'google.com'}"
               >Logout</a
             ></DropdownMenu.Item
           >
