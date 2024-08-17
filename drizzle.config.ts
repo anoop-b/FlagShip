@@ -5,7 +5,6 @@ export default {
   out: "src/lib/drizzle/migrations",
   dialect: "sqlite",
   driver: "d1-http",
-  // TODO : replace with env values
   dbCredentials: {
     accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
     databaseId: process.env.CLOUDFLARE_D1_ID!,
