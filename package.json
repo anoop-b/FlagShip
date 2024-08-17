@@ -13,7 +13,8 @@
     "deploy": "bun run build && wrangler pages deploy",
     "cf-typegen": "wrangler types && mv worker-configuration.d.ts src/",
     "migrate": "bunx drizzle-kit migrate",
-    "generate": "bunx drizzle-kit generate"
+    "generate": "bunx drizzle-kit generate",
+    "studio": "bunx drizzle-kit studio"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.2.3",
