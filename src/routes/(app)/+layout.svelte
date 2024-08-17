@@ -13,9 +13,10 @@
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import * as Sheet from "$lib/components/ui/sheet/index.js";
-  import { PUBLIC_CLOUDFLARE_TEAM_DOMAIN } from "$env/static/public";
+  import { PUBLIC_CLOUDFLARE_TEAM_DOMAIN } from '$env/static/public';
 
   import "../../app.css";
+    import { page } from "$app/stores";
 </script>
 
 <div
@@ -51,7 +52,7 @@
             </Badge>
           </a>
           <a
-            href="##"
+            href="/dashboard/flags"
             class="text-muted-foreground hover:text-primary hover:text-primary flex items-center gap-3 rounded-lg px-3 py-2 transition-all"
           >
             <Flag class="h-4 w-4" />
@@ -196,14 +197,13 @@
     </header>
     <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
       <div class="flex items-center">
-        <h1 class="text-lg font-semibold md:text-2xl">Inventory</h1>
+        <!-- print the page route -->
+        <h1 class="text-lg font-semibold md:text-2xl">{$page.route.id}.</h1>
       </div>
       <div
         class="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
       >
-        <div class="flex flex-col items-center gap-1 text-center">
           <slot />
-        </div>
       </div>
     </main>
   </div>
