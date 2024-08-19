@@ -7,8 +7,11 @@ export const load = (async (events) => {
   const id = events.params.id;
 
   const db = drizzle(events.platform?.env.DB!, { schema });
-  const results = await db.query.flagsTable.findMany({
+  const results = await db.query.flagsTable.findFirst({
     where: eq(schema.flagsTable.id, +id),
+    with:{
+      project: true
+    }
   });
 
   return {
