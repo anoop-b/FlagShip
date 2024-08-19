@@ -17,7 +17,6 @@
 
   import "../../app.css";
     import { page } from "$app/stores";
-  const LOGOUT_URL = PUBLIC_CLOUDFLARE_TEAM_DOMAIN;
 </script>
 
 <div
@@ -189,8 +188,7 @@
           <DropdownMenu.Item>Support</DropdownMenu.Item>
           <DropdownMenu.Separator />
           <DropdownMenu.Item
-            ><a
-              href="https://{LOGOUT_URL}/cdn-cgi/access/logout"
+            ><a href="https://{PUBLIC_CLOUDFLARE_TEAM_DOMAIN}/cdn-cgi/access/logout"
               >Logout</a
             ></DropdownMenu.Item
           >
