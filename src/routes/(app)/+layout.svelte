@@ -7,14 +7,13 @@
   import Menu from "lucide-svelte/icons/menu";
   import Search from "lucide-svelte/icons/search";
   import Users from "lucide-svelte/icons/users";
-  import { Badge } from "$lib/components/ui/badge/index.js";
   import { Button } from "$lib/components/ui/button/index.js";
   import * as Card from "$lib/components/ui/card/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import * as Sheet from "$lib/components/ui/sheet/index.js";
   import "../../app.css";
-    import { page } from "$app/stores";
+  import { page } from "$app/stores";
 </script>
 
 <div
@@ -43,15 +42,10 @@
           >
             <ShoppingCart class="h-4 w-4" />
             Projects
-            <Badge
-              class="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-            >
-              2
-            </Badge>
           </a>
           <a
             href="/dashboard/flags"
-            class="text-muted-foreground hover:text-primary hover:text-primary flex items-center gap-3 rounded-lg px-3 py-2 transition-all"
+            class="text-muted-foreground hover:text-primary flex items-center gap-3 rounded-lg px-3 py-2 transition-all"
           >
             <Flag class="h-4 w-4" />
             Flags
@@ -109,11 +103,6 @@
             >
               <ShoppingCart class="h-4 w-4" />
               Projects
-              <Badge
-                class="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-              >
-                2
-              </Badge>
             </a>
             <a
               href="##"
@@ -200,7 +189,7 @@
       <div
         class="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
       >
-          <slot />
+        <slot />
       </div>
     </main>
   </div>
