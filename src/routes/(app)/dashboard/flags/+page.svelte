@@ -1,14 +1,31 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     export let data;
+    import * as Table from "$lib/components/ui/table/index.js";
 </script>
 
-<div class="flex flex-col gap-4">
-    <div class="grid gap-4 py-4 grid-cols-2">
-        {#each data.data as flag}
-            <div>
-                <a class="text-xl" href="/dashboard/flags/{flag.id}">{flag.name}</a>
-                <h1>createdAt:{flag.createdAt}</h1>
-            </div>
-        {/each}
+<div class="flex flex-col">
+    <div class="p-4 m-4 shadow-xl ">
+        <Table.Root>
+            <Table.Caption>A list of your Flags across all Projects</Table.Caption>
+            <Table.Header>
+              <Table.Row>
+                <Table.Head class="w-[200px]">Name</Table.Head>
+                <Table.Head>Kind</Table.Head>
+                <Table.Head>Archived</Table.Head>
+                <Table.Head class="text-right">Project</Table.Head>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+                {#each data.data as flag}
+                    <Table.Row on:click={() => goto(`/dashboard/projects/${flag.project.name}`)} >
+                        <Table.Cell class="font-medium">{flag.name}</Table.Cell>
+                        <Table.Cell>{flag.kind}</Table.Cell>
+                        <Table.Cell>{flag.archived}</Table.Cell>
+                        <Table.Cell class="text-right">{flag.project.name}</Table.Cell>
+                    </Table.Row>
+                    {/each}
+            </Table.Body>
+          </Table.Root>
     </div>
 </div>
