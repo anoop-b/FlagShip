@@ -5,6 +5,7 @@ import { redirect } from "@sveltejs/kit";
 
 export const load = (async (events) => {
   const db = drizzle(events.platform?.env.DB!, { schema });
+  // TODO: pagination
   const results = await db.query.projectsTable.findMany({
     with: {
       flags: true,
@@ -19,7 +20,6 @@ export const load = (async (events) => {
       .execute();
     throw redirect(303, "/dashboard/projects");
   }
-
 
   return {
     data: results,
