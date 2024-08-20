@@ -18,7 +18,7 @@ export const load = (async (events) => {
       .insert(schema.projectsTable)
       .values({ name: "Default", description: "default project" })
       .execute();
-     redirect(303, "/dashboard/projects");
+     redirect(302, "/dashboard");
   }
 
   return {
