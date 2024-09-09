@@ -1,15 +1,18 @@
-import { drizzle } from 'drizzle-orm/d1';
 import type { PageServerLoad } from './$types';
-import * as schema from '$lib/drizzle/schema';
+import { getDb } from '$lib/server/db';
+import { error } from '@sveltejs/kit';
 
 export const load = (async (events) => {
-	const db = drizzle(events.platform!.env.DB, { schema });
+	const db = getDb(events);
 	// TODO: pagination
 	const results = await db.query.flagsTable.findMany({
 		with: {
 			project: true
 		}
 	});
+	if (!results) {
+		throw error(404, 'Project Not Found');
+	}
 	return {
 		data: results
 	};
