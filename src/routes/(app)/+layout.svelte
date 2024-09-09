@@ -55,7 +55,7 @@
 						Users
 					</a>
 					<a
-						href="##"
+						href="/dashboard/environments"
 						class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
 					>
 						<LineChart class="h-4 w-4" />
@@ -95,7 +95,7 @@
 							Projects
 						</a>
 						<a
-							href="##"
+							href="/dashboard/flags"
 							class="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
 						>
 							<Flag class="h-5 w-5" />
@@ -109,7 +109,7 @@
 							Users
 						</a>
 						<a
-							href="##"
+							href="/dashboard/environments"
 							class="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
 						>
 							<LineChart class="h-5 w-5" />
@@ -155,7 +155,9 @@
 				<!-- print the page route -->
 				<h1 class="text-lg font-semibold md:text-2xl">{$page.url.pathname}</h1>
 			</div>
-			<div class="flex flex-1 items-start justify-center rounded-lg border border-dashed shadow-sm">
+			<div
+				class="flex flex-1 items-start justify-center rounded-lg border border-dashed bg-muted/40 shadow-sm"
+			>
 				<slot />
 			</div>
 		</main>
