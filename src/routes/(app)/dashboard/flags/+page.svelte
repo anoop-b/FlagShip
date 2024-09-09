@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex flex-1 flex-col">
-	<div class="m-4 p-4 shadow-lg">
+	<div class="m-4 rounded-xl border bg-white p-4">
 		<Table.Root>
 			<Table.Caption>A list of your Flags across all Projects</Table.Caption>
 			<Table.Header>
