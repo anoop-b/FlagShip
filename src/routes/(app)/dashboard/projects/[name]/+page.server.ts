@@ -40,6 +40,7 @@ export const actions: Actions = {
 			});
 		}
 		const db = getDb(event);
+		// TODO: if flag already exists for a project, configs needs to be handled accordingly
 		const res = await db
 			.insert(schema.environmentsTable)
 			.values({
@@ -69,6 +70,7 @@ export const actions: Actions = {
 			.returning({ id: schema.flagsTable.id });
 
 		if (form.data.configs.length > 0) {
+			// TODO: handle both inside a transaction
 			const configsArray = form.data.configs.map((conf) => ({
 				flag_id: res[0].id,
 				value: conf.value.toString(),

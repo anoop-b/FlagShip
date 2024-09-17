@@ -25,7 +25,6 @@
 	const { form: formData, enhance } = form;
 
 	data.data.enviroments.forEach((item, index) => {
-		console.log(`Item ${index}: ${item}`);
 		$formData.configs[index] = { environment_id: item.id.toString(), value: false };
 	});
 
