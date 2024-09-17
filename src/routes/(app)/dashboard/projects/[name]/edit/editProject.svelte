@@ -3,18 +3,18 @@
 	import { Input } from '$lib/components/ui/input';
 	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms/client';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { projectEditFormSchema, type ProjectEditFormSchema } from './schema';
 
-	export let data: SuperValidated<Infer<ProjectEditFormSchema>>;
+	import { projectFormSchema, type ProjectFormSchema } from '$lib/schemas/forms-schemas';
+	export let data: SuperValidated<Infer<ProjectFormSchema>>;
 
 	const form = superForm(data, {
-		validators: zodClient(projectEditFormSchema)
+		validators: zodClient(projectFormSchema)
 	});
 
 	const { form: formData, enhance } = form;
 </script>
 
-<form method="POST" use:enhance>
+<form method="POST" action="?/editProject" use:enhance>
 	<Form.Field {form} name="name">
 		<Form.Control let:attrs>
 			<Form.Label>Project Name</Form.Label>
@@ -31,8 +31,5 @@
 		<Form.Description>Short description of the project</Form.Description>
 		<Form.FieldErrors />
 	</Form.Field>
-	<div class="flex flex-1 justify-between">
-		<Form.Button variant="outline">Cancel</Form.Button>
-		<Form.Button>Submit</Form.Button>
-	</div>
+	<Form.Button>Submit</Form.Button>
 </form>

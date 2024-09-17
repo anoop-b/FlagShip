@@ -3,8 +3,9 @@ import * as schema from '$lib/drizzle/schema';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { projectFormSchema } from './project-form.svelte';
 import { getDb } from '$lib/server/db';
+import { projectFormSchema } from '$lib/schemas/forms-schemas';
+
 
 export const load = (async (events) => {
 	const db = getDb(events);

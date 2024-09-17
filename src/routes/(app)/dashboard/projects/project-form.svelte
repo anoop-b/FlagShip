@@ -1,12 +1,3 @@
-<script lang="ts" context="module">
-	export const projectFormSchema = z.object({
-		name: z.string().min(3).max(50),
-		description: z.string().min(3).max(50)
-	});
-
-	export type ProjectFormSchema = typeof projectFormSchema;
-</script>
-
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
@@ -14,7 +5,8 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { buttonVariants } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import { z } from 'zod';
+	import { projectFormSchema, type ProjectFormSchema } from '$lib/schemas/forms-schemas';
+
 
 	export let data: SuperValidated<Infer<ProjectFormSchema>>;
 
