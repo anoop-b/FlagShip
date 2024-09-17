@@ -10,8 +10,16 @@ export const load = (async (events) => {
 	const results = await db.query.flagsTable.findFirst({
 		where: eq(schema.flagsTable.id, +id),
 		with: {
-			project: true,
-			configs: true
+			project: {
+				with: {
+					enviroments: true
+				}
+			},
+			configs: {
+				with: {
+					environment: true
+				}
+			}
 		}
 	});
 
