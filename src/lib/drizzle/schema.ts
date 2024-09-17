@@ -1,28 +1,35 @@
 import { relations, sql } from 'drizzle-orm';
-import { text, sqliteTable, integer } from 'drizzle-orm/sqlite-core';
+import { text, sqliteTable, integer, unique } from 'drizzle-orm/sqlite-core';
 
-export const flagsTable = sqliteTable('flags', {
-	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-	name: text('name').notNull().unique(),
-	kind: text('kind', { enum: ['boolean', 'string', 'number'] })
-		.notNull()
-		.default('boolean'),
-	description: text('description'),
-	createdAt: text('created_at')
-		.notNull()
-		.default(sql`(current_timestamp)`),
-	updatedAt: text('updated_at')
-		.notNull()
-		.default(sql`(current_timestamp)`),
-	deprecated: integer('deprecated', { mode: 'boolean' }).default(false),
-	archived: integer('archived', { mode: 'boolean' }).default(false),
-	project_id: integer('project_id', { mode: 'number' })
-		.references(() => projectsTable.id, {
-			onDelete: 'no action'
-		})
-		.notNull()
-		.default(1)
-});
+export const flagsTable = sqliteTable(
+	'flags',
+	{
+		id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+		name: text('name').notNull().unique(),
+		kind: text('kind', { enum: ['boolean', 'string', 'number'] })
+			.notNull()
+			.default('boolean'),
+		description: text('description'),
+		createdAt: text('created_at')
+			.notNull()
+			.default(sql`(current_timestamp)`),
+		updatedAt: text('updated_at')
+			.notNull()
+			.default(sql`(current_timestamp)`)
+			.$onUpdate(() => sql`(current_timestamp)`),
+		deprecated: integer('deprecated', { mode: 'boolean' }).default(false),
+		archived: integer('archived', { mode: 'boolean' }).default(false),
+		project_id: integer('project_id', { mode: 'number' })
+			.references(() => projectsTable.id, {
+				onDelete: 'cascade'
+			})
+			.notNull()
+			.default(1)
+	},
+	(t) => ({
+		unq: unique().on(t.name, t.project_id)
+	})
+);
 
 export const flagsRelations = relations(flagsTable, ({ one, many }) => ({
 	project: one(projectsTable, {
@@ -41,7 +48,8 @@ export const projectsTable = sqliteTable('projects', {
 		.default(sql`(current_timestamp)`),
 	updatedAt: text('updated_at')
 		.notNull()
-		.default(sql`(current_timestamp)`),
+		.default(sql`(current_timestamp)`)
+		.$onUpdate(() => sql`(current_timestamp)`),
 	deprecated: integer('deprecated', { mode: 'boolean' }).default(false),
 	archived: integer('archived', { mode: 'boolean' }).default(false)
 });
@@ -52,21 +60,29 @@ export const projectsRelations = relations(projectsTable, ({ many }) => ({
 	enviroments: many(environmentsTable)
 }));
 
-export const environmentsTable = sqliteTable('environments', {
-	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-	name: text('name').notNull().unique(),
-	createdAt: text('created_at')
-		.notNull()
-		.default(sql`(current_timestamp)`),
-	updatedAt: text('updated_at')
-		.notNull()
-		.default(sql`(current_timestamp)`),
-	project_id: integer('project_id', { mode: 'number' })
-		.references(() => projectsTable.id, {
-			onDelete: 'cascade'
-		})
-		.notNull()
-});
+export const environmentsTable = sqliteTable(
+	'environments',
+	{
+		id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+		name: text('name').notNull(),
+		description: text('description').notNull().default('default description'),
+		createdAt: text('created_at')
+			.notNull()
+			.default(sql`(current_timestamp)`),
+		updatedAt: text('updated_at')
+			.notNull()
+			.default(sql`(current_timestamp)`)
+			.$onUpdate(() => sql`(current_timestamp)`),
+		project_id: integer('project_id', { mode: 'number' })
+			.references(() => projectsTable.id, {
+				onDelete: 'cascade'
+			})
+			.notNull()
+	},
+	(t) => ({
+		unq: unique().on(t.name, t.project_id)
+	})
+);
 
 export const envConfigRelations = relations(environmentsTable, ({ one, many }) => ({
 	project: one(projectsTable, {
@@ -88,6 +104,7 @@ export const configTable = sqliteTable('config', {
 			onDelete: 'cascade'
 		})
 		.notNull(),
+	// change to JSON
 	value: text('value').notNull(),
 	createdAt: text('created_at')
 		.notNull()
@@ -95,6 +112,7 @@ export const configTable = sqliteTable('config', {
 	updatedAt: text('updated_at')
 		.notNull()
 		.default(sql`(current_timestamp)`)
+		.$onUpdate(() => sql`(current_timestamp)`)
 });
 
 export const configRelations = relations(configTable, ({ one }) => ({
