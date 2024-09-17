@@ -6,6 +6,7 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import type { PageServerData } from './$types';
 	import EditProject from './editProject.svelte';
+	import { enhance } from '$app/forms';
 	export let data: PageServerData;
 </script>
 
@@ -78,6 +79,7 @@
 								</div>
 							</Card.Content>
 						</Card.Root>
+						<!-- TODO: add undo archive button -->
 						<Card.Root>
 							<Card.Header>
 								<Card.Title>Archive Project</Card.Title>
@@ -86,8 +88,9 @@
 								</Card.Description>
 							</Card.Header>
 							<Card.Content>
-								<div></div>
-								<Button size="sm" variant="secondary">Archive Project</Button>
+								<form method="POST" action="?/archiveProject" use:enhance>
+									<Button type="submit" size="sm" variant="secondary">Archive Project</Button>
+								</form>
 							</Card.Content>
 						</Card.Root>
 						<Card.Root>
@@ -99,9 +102,9 @@
 								</Card.Description>
 							</Card.Header>
 							<Card.Content>
-								<div></div>
-								<!-- delete project -->
-								<Button size="sm" variant="destructive">Delete Project</Button>
+								<form method="POST" action="?/deleteProject" use:enhance>
+									<Button type="submit" size="sm" variant="destructive">Delete Project</Button>
+								</form>
 							</Card.Content>
 						</Card.Root>
 					</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
-	import { DollarSign, Users, CreditCard, Activity } from 'lucide-svelte';
+	import { DollarSign, CreditCard, Activity, Flag} from 'lucide-svelte';
 	export let data;
 </script>
 
@@ -19,7 +19,7 @@
 		<Card.Root>
 			<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 				<Card.Title class="text-sm font-medium">Flags</Card.Title>
-				<Users class="h-4 w-4 text-muted-foreground" />
+				<Flag class="h-4 w-4 text-muted-foreground" />
 			</Card.Header>
 			<Card.Content>
 				<div class="text-2xl font-bold">{data.data.flags[0].count}</div>
