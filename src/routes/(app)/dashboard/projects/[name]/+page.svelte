@@ -1,14 +1,18 @@
 <script lang="ts">
 	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
-	import CirclePlus from 'lucide-svelte/icons/circle-plus';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import type { PageServerData } from './$types';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import Environment from './environment-form.svelte';
+	import FlagForm from './flag-form.svelte';
+	import { Rocket } from 'lucide-svelte';
+	import { Separator } from '$lib/components/ui/separator';
+	import * as Alert from '$lib/components/ui/alert';
+	import { Badge } from '$lib/components/ui/badge';
 	export let data: PageServerData;
 </script>
 
@@ -70,13 +74,13 @@
 										<div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 											<dt class="text-sm font-medium text-gray-500">Created At</dt>
 											<dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-												{data.data?.createdAt}
+												{new Date(data.data?.createdAt).toLocaleString()}
 											</dd>
 										</div>
 										<div class="bg-muted/40 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 											<dt class="text-sm font-medium text-gray-500">Updated At</dt>
 											<dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-												{data.data?.updatedAt}
+												{new Date(data.data?.updatedAt).toLocaleString()}
 											</dd>
 										</div>
 										<div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -101,7 +105,16 @@
 								</div>
 							</Card.Content>
 						</Card.Root>
-						{#if data.data?.flags}
+						{#if data.data?.enviroments.length === 0}
+							<Alert.Root>
+								<Rocket class="h-4 w-4" />
+								<Alert.Title>Heads up!</Alert.Title>
+								<Alert.Description
+									>Please create an environment to start creating flags</Alert.Description
+								>
+							</Alert.Root>
+						{/if}
+						{#if data.data?.flags && data.data?.enviroments.length > 0}
 							<Card.Root>
 								<Card.Header>
 									<Card.Title>Flags</Card.Title>
@@ -119,21 +132,20 @@
 										</Table.Header>
 										<Table.Body>
 											{#each data.data.flags as flag}
-												<Table.Row on:click={() => goto(`/dashboard/projects/${flag.project_id}`)}>
+												<Table.Row role='button' on:click={() => goto(`/dashboard/flags/${flag.id}`)}>
 													<Table.Cell class="font-medium">{flag.name}</Table.Cell>
 													<Table.Cell>{flag.kind}</Table.Cell>
 													<Table.Cell>{flag.archived}</Table.Cell>
-													<Table.Cell class="text-right">{flag.createdAt}</Table.Cell>
+													<Table.Cell class="text-right">
+														{new Date(flag.createdAt).toLocaleString()}
+													</Table.Cell>
 												</Table.Row>
 											{/each}
 										</Table.Body>
 									</Table.Root>
 								</Card.Content>
 								<Card.Footer class="justify-center border-t p-4">
-									<Button size="sm" variant="ghost" class="gap-1">
-										<CirclePlus class="h-3.5 w-3.5" />
-										Add Variant
-									</Button>
+									<FlagForm {data} />
 								</Card.Footer>
 							</Card.Root>
 						{/if}
@@ -144,28 +156,32 @@
 									<Card.Description>All enviroments associated with the project</Card.Description>
 								</Card.Header>
 								<Card.Content>
-									<Table.Root>
-										<Table.Header>
-											<Table.Row>
-												<Table.Head class="w-[100px]">Name</Table.Head>
-												<Table.Head class="w-[100px]">Created At</Table.Head>
-											</Table.Row>
-										</Table.Header>
-										<Table.Body>
-											{#each data.data.enviroments as env}
-												<Table.Row on:click={() => goto(`/dashboard/projects/${env.project_id}`)}>
-													<Table.Cell class="font-medium">{env.name}</Table.Cell>
-													<Table.Cell>{env.createdAt}</Table.Cell>
+									{#if data.data?.enviroments.length}
+										<Table.Root>
+											<Table.Header>
+												<Table.Row>
+													<Table.Head class="w-[100px]">Name</Table.Head>
+													<Table.Head class="w-[100px]">Created At</Table.Head>
 												</Table.Row>
-											{/each}
-										</Table.Body>
-									</Table.Root>
+											</Table.Header>
+											<Table.Body>
+												{#each data.data.enviroments as env}
+													<Table.Row >
+														<Table.Cell class="font-medium">{env.name}</Table.Cell>
+														<Table.Cell>{env.createdAt}</Table.Cell>
+													</Table.Row>
+												{/each}
+											</Table.Body>
+										</Table.Root>
+									{:else}
+										<Separator orientation="horizontal" />
+										<Card.Description class="m-4 pt-5"
+											>Please create an environment to start creating flags</Card.Description
+										>
+									{/if}
 								</Card.Content>
 								<Card.Footer class="justify-center border-t p-4">
-									<Button size="sm" variant="ghost" class="gap-1">
-										<CirclePlus class="h-3.5 w-3.5" />
-										Add Variant
-									</Button>
+									<Environment {data} />
 								</Card.Footer>
 							</Card.Root>
 						{/if}
@@ -177,11 +193,11 @@
 							</Card.Header>
 							<Card.Content>
 								<div class="grid gap-6">
-									<div class="grid gap-3">
+									<div>
 										{#if data.data?.archived}
-											<Label for="status">Archived</Label>
+											<Badge variant="default">Archived</Badge>
 										{:else}
-											<Label for="status">Active</Label>
+											<Badge variant="outline">Active</Badge>
 										{/if}
 									</div>
 								</div>
