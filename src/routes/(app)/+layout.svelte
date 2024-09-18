@@ -13,6 +13,7 @@
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import '../../app.css';
 	import { page } from '$app/stores';
+	import { dev } from '$app/environment';
 </script>
 
 <div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -151,10 +152,12 @@
 			</DropdownMenu.Root>
 		</header>
 		<main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-			<div class="flex items-center">
-				<!-- print the page route -->
-				<h1 class="text-lg font-semibold md:text-2xl">{$page.url.pathname}</h1>
-			</div>
+			{#if dev}
+				<div class="flex items-center">
+					<!-- print the page route -->
+					<h1 class="text-base font-extralight">{$page.url.pathname}</h1>
+				</div>
+			{/if}
 			<div
 				class="flex flex-1 items-start justify-center rounded-lg border border-dashed bg-muted/40 shadow-sm"
 			>
