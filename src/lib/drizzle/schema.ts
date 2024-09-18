@@ -24,7 +24,6 @@ export const flagsTable = sqliteTable(
 				onDelete: 'cascade'
 			})
 			.notNull()
-			.default(1)
 	},
 	(t) => ({
 		unq: unique().on(t.name, t.project_id)
