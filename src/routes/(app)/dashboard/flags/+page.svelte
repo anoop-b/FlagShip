@@ -18,7 +18,7 @@
 			</Table.Header>
 			<Table.Body>
 				{#each data.data as flag}
-					<Table.Row on:click={() => goto(`/dashboard/projects/${flag.project.name}`)}>
+					<Table.Row on:click={() => goto(`/dashboard/flags/${flag.id}`)}>
 						<Table.Cell class="font-medium">{flag.name}</Table.Cell>
 						<Table.Cell>{flag.kind}</Table.Cell>
 						<Table.Cell>{flag.archived}</Table.Cell>
