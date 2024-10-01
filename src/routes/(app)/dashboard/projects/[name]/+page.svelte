@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
+	import EllipsisVertical from 'lucide-svelte/icons/ellipsis-vertical';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
@@ -13,6 +14,8 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import * as Alert from '$lib/components/ui/alert';
 	import { Badge } from '$lib/components/ui/badge';
+	import { enhance } from '$app/forms';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	export let data: PageServerData;
 </script>
 
@@ -132,7 +135,10 @@
 										</Table.Header>
 										<Table.Body>
 											{#each data.data.flags as flag}
-												<Table.Row role='button' on:click={() => goto(`/dashboard/flags/${flag.id}`)}>
+												<Table.Row
+													role="button"
+													on:click={() => goto(`/dashboard/flags/${flag.id}`)}
+												>
 													<Table.Cell class="font-medium">{flag.name}</Table.Cell>
 													<Table.Cell>{flag.kind}</Table.Cell>
 													<Table.Cell>{flag.archived}</Table.Cell>
@@ -166,7 +172,7 @@
 											</Table.Header>
 											<Table.Body>
 												{#each data.data.enviroments as env}
-													<Table.Row >
+													<Table.Row>
 														<Table.Cell class="font-medium">{env.name}</Table.Cell>
 														<Table.Cell>{env.createdAt}</Table.Cell>
 													</Table.Row>
@@ -189,7 +195,7 @@
 					<div class="grid auto-rows-max items-start gap-4 lg:gap-8">
 						<Card.Root>
 							<Card.Header>
-								<Card.Title>Project Status</Card.Title>
+								<Card.Title tag="h4">Project Status</Card.Title>
 							</Card.Header>
 							<Card.Content>
 								<div class="grid gap-6">
@@ -203,6 +209,51 @@
 								</div>
 							</Card.Content>
 						</Card.Root>
+						{#if data.data?.stores}
+							<Card.Root class="overflow-hidden">
+								<Card.Header class="flex flex-row items-center bg-muted/50">
+									<div class="grid gap-0.5">
+										<Card.Title tag="h4" class="group flex items-center gap-2">
+											KV Integration
+										</Card.Title>
+									</div>
+									<div class="ml-auto flex items-center gap-1">
+										<DropdownMenu.Root>
+											<DropdownMenu.Trigger asChild let:builder>
+												<Button builders={[builder]} size="icon" variant="outline" class="h-8 w-8">
+													<EllipsisVertical class="h-3.5 w-3.5" />
+													<span class="sr-only">More</span>
+												</Button>
+											</DropdownMenu.Trigger>
+											<DropdownMenu.Content align="end">
+												<DropdownMenu.Item
+													type="button"
+													on:click={() => goto($page.url + '/integration')}
+												>
+													edit
+												</DropdownMenu.Item>
+											</DropdownMenu.Content>
+										</DropdownMenu.Root>
+									</div>
+								</Card.Header>
+								<Card.Content>
+									<div class="flex flex-row place-content-center pt-6">
+										<form method="POST" action="?/syncKV" use:enhance>
+											<Button type="submit" size="lg" variant="link">Sync now</Button>
+										</form>
+									</div>
+								</Card.Content>
+								<Card.Footer class="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+									<div class="text-xs text-muted-foreground">
+										<Card.Description class="text-sm text-base"
+											>Last sync: {new Date(
+												data.data.stores.updatedAt
+											).toLocaleString()}</Card.Description
+										>
+									</div>
+								</Card.Footer>
+							</Card.Root>
+						{/if}
 					</div>
 				</div>
 				<div class="flex items-center justify-center gap-2 md:hidden">

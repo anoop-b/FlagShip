@@ -9,7 +9,7 @@ export const flagsTable = sqliteTable(
 		kind: text('kind', { enum: ['boolean', 'string', 'number'] })
 			.notNull()
 			.default('boolean'),
-		description: text('description'),
+		description: text('description').notNull(),
 		createdAt: text('created_at')
 			.notNull()
 			.default(sql`(current_timestamp)`),
@@ -54,9 +54,10 @@ export const projectsTable = sqliteTable('projects', {
 });
 
 // one project can have many flags
-export const projectsRelations = relations(projectsTable, ({ many }) => ({
+export const projectsRelations = relations(projectsTable, ({ one, many }) => ({
 	flags: many(flagsTable),
-	enviroments: many(environmentsTable)
+	enviroments: many(environmentsTable),
+	stores: one(storesTable)
 }));
 
 export const environmentsTable = sqliteTable(
@@ -103,8 +104,8 @@ export const configTable = sqliteTable('config', {
 			onDelete: 'cascade'
 		})
 		.notNull(),
-	// change to JSON
-	value: text('value').notNull(),
+	// TODO: change to JSON
+	value: integer('value', { mode: 'boolean' }).notNull(),
 	createdAt: text('created_at')
 		.notNull()
 		.default(sql`(current_timestamp)`),
@@ -122,5 +123,32 @@ export const configRelations = relations(configTable, ({ one }) => ({
 	flags: one(flagsTable, {
 		fields: [configTable.flag_id],
 		references: [flagsTable.id]
+	})
+}));
+
+export const storesTable = sqliteTable('stores', {
+	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+	project_id: integer('project_id', { mode: 'number' })
+		.references(() => projectsTable.id, {
+			onDelete: 'cascade'
+		})
+		.notNull(),
+	account_id: text('name').notNull(),
+	namespace_id: text('namespace_id'),
+	api_token: text('api_token').notNull(),
+	value: text('value', { mode: 'json' }).notNull(),
+	createdAt: text('created_at')
+		.notNull()
+		.default(sql`(current_timestamp)`),
+	updatedAt: text('updated_at')
+		.notNull()
+		.default(sql`(current_timestamp)`)
+		.$onUpdate(() => sql`(current_timestamp)`)
+});
+
+export const storesRelations = relations(storesTable, ({ one }) => ({
+	project: one(projectsTable, {
+		fields: [storesTable.project_id],
+		references: [projectsTable.id]
 	})
 }));

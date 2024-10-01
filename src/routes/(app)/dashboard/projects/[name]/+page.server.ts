@@ -6,6 +6,7 @@ import { error, redirect, type Actions } from '@sveltejs/kit';
 import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { enviromentCreateFormSchema, flagCreateFormSchema } from '$lib/schemas/forms-schemas';
+import Cloudflare from '$lib/server/cloudflare';
 
 export const load = (async (events) => {
 	const name = events.params.name;
@@ -15,7 +16,8 @@ export const load = (async (events) => {
 		where: eq(schema.projectsTable.name, name),
 		with: {
 			flags: true,
-			enviroments: true
+			enviroments: true,
+			stores: true
 		}
 	});
 
@@ -49,8 +51,53 @@ export const actions: Actions = {
 				description: form.data.description
 			})
 			.returning({ id: schema.environmentsTable.project_id });
+
+		
 		if (res[0].id) {
 			redirect(302, `/dashboard/projects/${event.params.name}/`);
+		}
+	},
+	syncKV: async (event) => {
+		const name = event.params.name;
+		if (name) {
+			const db = getDb(event);
+			const results = await db.query.projectsTable.findFirst({
+				where: eq(schema.projectsTable.name, name),
+				with: {
+					flags: {
+						with: {
+							configs: {
+								with: {
+									environment: true
+								}
+							}
+						}
+					},
+					stores: true
+				}
+			});
+
+			if (results?.stores) {
+				const cf = new Cloudflare(
+					results.stores.account_id,
+					results.stores.namespace_id!,
+					results.stores.api_token
+				);
+				results.stores = null;
+
+				await db
+					.update(schema.storesTable)
+					.set({
+						value: JSON.stringify(results)
+					})
+					.execute();
+
+				const res = await cf.putValue('flagShip', JSON.stringify(results));
+				if (res.ok) {
+					redirect(302, `/dashboard/projects/${event.params.name}`);
+				}
+				error(500, 'something went wrong with KV Sync');
+			}
 		}
 	},
 	createForm: async (event) => {
@@ -68,12 +115,13 @@ export const actions: Actions = {
 				...form.data
 			})
 			.returning({ id: schema.flagsTable.id });
+			console.log(res)
 
 		if (form.data.configs.length > 0) {
 			// TODO: handle both inside a transaction
 			const configsArray = form.data.configs.map((conf) => ({
 				flag_id: res[0].id,
-				value: conf.value.toString(),
+				value: conf.value,
 				environment_id: +conf.environment_id
 			}));
 			await db.insert(schema.configTable).values(configsArray).execute();

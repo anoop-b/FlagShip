@@ -13,10 +13,11 @@ export const flagCreateFormSchema = z.object({
 	description: z.string().min(3).max(50),
 	configs: z
 		.object({
-			environment_id: z.string().min(1),
+			environment_id: z.number().min(1),
 			value: z.boolean().default(true)
 		})
 		.array()
+		.min(1)
 });
 
 export type FlagCreateFormSchema = typeof flagCreateFormSchema;
@@ -27,3 +28,19 @@ export const projectFormSchema = z.object({
 });
 
 export type ProjectFormSchema = typeof projectFormSchema;
+
+export const storesFormSchema = z.object({
+	cfAccountId: z.string().length(32),
+	cfApiToken: z.string().length(40),
+	cfKvNamespaceId: z.string().length(32)
+});
+
+export type StoresFormSchema = typeof storesFormSchema;
+
+export const configFormSchema = z.object({
+	id: z.number().optional(),
+	environment_id: z.number().min(1),
+	value: z.boolean().default(true)
+});
+
+export type ConfigFormSchema = typeof configFormSchema;

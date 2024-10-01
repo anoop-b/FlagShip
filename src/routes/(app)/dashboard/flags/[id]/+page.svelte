@@ -2,14 +2,13 @@
 	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import type { PageServerData } from './$types';
 	import * as Table from '$lib/components/ui/table/index.js';
 	import { page } from '$app/stores';
 	import { Separator } from '$lib/components/ui/separator';
-	import { goto } from '$app/navigation';
 	import { Badge } from '$lib/components/ui/badge';
+	import ConfigForm from './config-form.svelte';
 	export let data: PageServerData;
 </script>
 
@@ -37,7 +36,12 @@
 		<main class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
 			<div class="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-8">
 				<div class="flex items-center gap-4">
-					<Button href="/dashboard/projects/{data.data?.project.name}" variant="outline" size="icon" class="h-7 w-7">
+					<Button
+						href="/dashboard/projects/{data.data?.project.name}"
+						variant="outline"
+						size="icon"
+						class="h-7 w-7"
+					>
 						<ChevronLeft class="h-4 w-4" />
 						<span class="sr-only">Back</span>
 					</Button>
@@ -117,15 +121,19 @@
 												<Table.Row>
 													<Table.Head class="w-[100px]">Enviroments</Table.Head>
 													<Table.Head class="w-[100px]">Value</Table.Head>
+													<Table.Head class="w-[100px]">Update</Table.Head>
 												</Table.Row>
 											</Table.Header>
 											<Table.Body>
-												{#each data.data.configs as env}
-													<Table.Row
-														on:click={() => goto(`/dashboard/projects/${env.environment.id}`)}
-													>
-														<Table.Cell class="font-medium">{env.environment.name}</Table.Cell>
-														<Table.Cell>{env.value}</Table.Cell>
+												{#each data.data.project.enviroments as env, i}
+													<Table.Row>
+														<Table.Cell class="font-medium">{env.name}</Table.Cell>
+														<Table.Cell
+															>{!data.data.configs[i]
+																? 'Not Set'
+																: data.data.configs[i].value}</Table.Cell
+														>
+														<Table.Cell><ConfigForm {data} index={i} /></Table.Cell>
 													</Table.Row>
 												{/each}
 											</Table.Body>
@@ -137,9 +145,6 @@
 										>
 									{/if}
 								</Card.Content>
-								<Card.Footer class="justify-center border-t p-4">
-									<!-- <Environment project_id={data.data.id} data={data.envForm} /> -->
-								</Card.Footer>
 							</Card.Root>
 						{/if}
 					</div>

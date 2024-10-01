@@ -6,7 +6,6 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { getDb } from '$lib/server/db';
 import { projectFormSchema } from '$lib/schemas/forms-schemas';
 
-
 export const load = (async (events) => {
 	const db = getDb(events);
 	// TODO: pagination

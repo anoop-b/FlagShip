@@ -7,7 +7,6 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { projectFormSchema, type ProjectFormSchema } from '$lib/schemas/forms-schemas';
 
-
 	export let data: SuperValidated<Infer<ProjectFormSchema>>;
 
 	const form = superForm(data, {

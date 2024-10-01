@@ -25,7 +25,7 @@
 	const { form: formData, enhance } = form;
 
 	data.data.enviroments.forEach((item, index) => {
-		$formData.configs[index] = { environment_id: item.id.toString(), value: false };
+		$formData.configs[index] = { environment_id: item.id, value: false };
 	});
 
 	$: selectedFormType = $formData.kind

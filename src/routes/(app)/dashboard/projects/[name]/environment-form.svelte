@@ -6,16 +6,14 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { CirclePlus } from 'lucide-svelte';
-	import {
-		enviromentCreateFormSchema,
-	} from '$lib/schemas/forms-schemas';
+	import { enviromentCreateFormSchema } from '$lib/schemas/forms-schemas';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
 
 	const form = superForm(data.flagForm, {
 		id: data.data.id.toString(),
-		validators: zodClient(enviromentCreateFormSchema),
+		validators: zodClient(enviromentCreateFormSchema)
 	});
 
 	const { form: formData, enhance } = form;
