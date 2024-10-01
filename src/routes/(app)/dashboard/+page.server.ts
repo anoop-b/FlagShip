@@ -8,7 +8,6 @@ export const load = (async (events) => {
 	const projects = await db.select({ count: count() }).from(schema.projectsTable);
 	const flags = await db.select({ count: count() }).from(schema.flagsTable);
 
-	console.log(projects, flags);
 	return {
 		data: {
 			projects: projects,
