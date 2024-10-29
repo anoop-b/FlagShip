@@ -28,7 +28,7 @@ pages_build_output_dir = ".svelte-kit/cloudflare"
 # [[d1_databases]]
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "flagship"
+database_name = "flagShip"
 database_id = "0e0abed4-b08b-4298-8e13-85d127c2f773"
 
 # Bind a Durable Object. Durable objects are a scale-to-zero compute primitive based on the actor model.
