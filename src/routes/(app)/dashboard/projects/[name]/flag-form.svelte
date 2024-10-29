@@ -12,8 +12,6 @@
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 	import { Switch } from '$lib/components/ui/switch';
 	import { Separator } from '$lib/components/ui/separator';
-	import SuperDebug from 'sveltekit-superforms';
-	import Label from '$lib/components/ui/label/label.svelte';
 	export let data: PageServerData;
 
 	const form = superForm(data.flagForm, {

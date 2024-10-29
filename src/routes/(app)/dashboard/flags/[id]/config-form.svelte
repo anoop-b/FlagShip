@@ -2,7 +2,6 @@
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { superForm } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { buttonVariants } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
@@ -77,7 +76,6 @@
 		<Dialog.Header>
 			<Dialog.Title>Update Flag</Dialog.Title>
 			<Dialog.Description>Sets or updates Flag Value</Dialog.Description>
-			<SuperDebug data={$formData} />
 		</Dialog.Header>
 		<form method="POST" class="w-full space-y-6" use:enhance>
 			<legend class="text-sm"
