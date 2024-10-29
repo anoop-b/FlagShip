@@ -9,7 +9,7 @@ class Cloudflare {
 		this.apiKey = apiKey;
 	}
 
-	async putValue(keyName: string, body:any): Promise<Response> {
+	async putValue(keyName: string, body: any): Promise<Response> {
 		const url = `https://api.cloudflare.com/client/v4/accounts/${this.accountId}/storage/kv/namespaces/${this.namespaceId}/values/${keyName}`;
 		const headers = {
 			Authorization: `Bearer ${this.apiKey}`,

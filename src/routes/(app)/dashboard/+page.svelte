@@ -7,7 +7,7 @@
 
 <div class="flex flex-1 flex-col gap-1 text-center">
 	<div class="m-4 grid flex-1 items-center gap-4 p-4 md:grid-cols-2 lg:grid-cols-4">
-		<Card.Root role="button" on:click={()=> goto("/dashboard/projects")} class="hover:shadow-xl">
+		<Card.Root role="button" on:click={() => goto('/dashboard/projects')} class="hover:shadow-xl">
 			<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 				<Card.Title class="text-sm font-medium">Total Projects</Card.Title>
 				<DollarSign class="h-4 w-4 text-muted-foreground" />
@@ -17,7 +17,7 @@
 				<p class="text-xs text-muted-foreground">+20.1% from last month</p>
 			</Card.Content>
 		</Card.Root>
-		<Card.Root role="button" on:click={()=> goto("/dashboard/flags")} class="hover:shadow-xl">
+		<Card.Root role="button" on:click={() => goto('/dashboard/flags')} class="hover:shadow-xl">
 			<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 				<Card.Title class="text-sm font-medium">Flags</Card.Title>
 				<Flag class="h-4 w-4 text-muted-foreground" />

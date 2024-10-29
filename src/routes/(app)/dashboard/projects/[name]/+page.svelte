@@ -245,7 +245,7 @@
 								</Card.Content>
 								<Card.Footer class="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
 									<div class="text-xs text-muted-foreground">
-										<Card.Description class="text-sm text-base"
+										<Card.Description class="text-base text-sm"
 											>Last sync: {new Date(
 												data.data.stores.updatedAt
 											).toLocaleString()}</Card.Description

@@ -52,7 +52,6 @@ export const actions: Actions = {
 			})
 			.returning({ id: schema.environmentsTable.project_id });
 
-		
 		if (res[0].id) {
 			redirect(302, `/dashboard/projects/${event.params.name}/`);
 		}
@@ -115,7 +114,7 @@ export const actions: Actions = {
 				...form.data
 			})
 			.returning({ id: schema.flagsTable.id });
-			console.log(res)
+		console.log(res);
 
 		if (form.data.configs.length > 0) {
 			// TODO: handle both inside a transaction
