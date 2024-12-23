@@ -14,6 +14,7 @@
 	import '../../app.css';
 	import { page } from '$app/stores';
 	import { dev } from '$app/environment';
+	import { PUBLIC_CLOUDFLARE_TEAM_DOMAIN } from '$env/static/public';
 </script>
 
 <div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -145,7 +146,7 @@
 					<DropdownMenu.Item>Support</DropdownMenu.Item>
 					<DropdownMenu.Separator />
 					<DropdownMenu.Item
-						><a href="https://internetfreedom.cloudflareaccess.com/cdn-cgi/access/logout">Logout</a
+						><a href="https://${PUBLIC_CLOUDFLARE_TEAM_DOMAIN}/cdn-cgi/access/logout">Logout</a
 						></DropdownMenu.Item
 					>
 				</DropdownMenu.Content>
