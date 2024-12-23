@@ -8,23 +8,29 @@ import { getDb } from '$lib/server/db';
 import { projectFormSchema } from '$lib/schemas/forms-schemas';
 
 export const load = (async (events) => {
-	const name = events.params.name;
-	const db = getDb(events);
-	const results = await db.query.projectsTable.findFirst({
-		where: eq(schema.projectsTable.name, name),
-		with: {
-			flags: true,
-			enviroments: true
-		}
-	});
+	try {
+		const name = events.params.name;
+		const db = getDb(events);
+		const results = await db.query.projectsTable.findFirst({
+			where: eq(schema.projectsTable.name, name),
+			with: {
+				flags: true,
+				enviroments: true
+			}
+		});
 
-	if (!results) {
-		throw error(404, 'Project Not Found');
+		if (!results) {
+			throw error(404, 'Project Not Found');
+		}
+
+		return {
+			data: results,
+			form: await superValidate(results, zod(projectFormSchema))
+		};
+	} catch (err) {
+		console.error('Error loading project:', err);
+		throw error(500, 'Internal Server Error');
 	}
-	return {
-		data: results,
-		form: await superValidate(results, zod(projectFormSchema))
-	};
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
