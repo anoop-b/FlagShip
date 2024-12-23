@@ -209,33 +209,33 @@
 								</div>
 							</Card.Content>
 						</Card.Root>
-						{#if data.data?.stores}
-							<Card.Root class="overflow-hidden">
-								<Card.Header class="flex flex-row items-center bg-muted/50">
-									<div class="grid gap-0.5">
-										<Card.Title tag="h4" class="group flex items-center gap-2">
-											KV Integration
-										</Card.Title>
-									</div>
-									<div class="ml-auto flex items-center gap-1">
-										<DropdownMenu.Root>
-											<DropdownMenu.Trigger asChild let:builder>
-												<Button builders={[builder]} size="icon" variant="outline" class="h-8 w-8">
-													<EllipsisVertical class="h-3.5 w-3.5" />
-													<span class="sr-only">More</span>
-												</Button>
-											</DropdownMenu.Trigger>
-											<DropdownMenu.Content align="end">
-												<DropdownMenu.Item
-													type="button"
-													on:click={() => goto($page.url + '/integration')}
-												>
-													edit
-												</DropdownMenu.Item>
-											</DropdownMenu.Content>
-										</DropdownMenu.Root>
-									</div>
-								</Card.Header>
+						<Card.Root class="overflow-hidden">
+							<Card.Header class="flex flex-row items-center bg-muted/50">
+								<div class="grid gap-0.5">
+									<Card.Title tag="h4" class="group flex items-center gap-2">
+										Flag Stores
+									</Card.Title>
+								</div>
+								<div class="ml-auto flex items-center gap-1">
+									<DropdownMenu.Root>
+										<DropdownMenu.Trigger asChild let:builder>
+											<Button builders={[builder]} size="icon" variant="outline" class="h-8 w-8">
+												<EllipsisVertical class="h-3.5 w-3.5" />
+												<span class="sr-only">More</span>
+											</Button>
+										</DropdownMenu.Trigger>
+										<DropdownMenu.Content align="end">
+											<DropdownMenu.Item
+												type="button"
+												on:click={() => goto($page.url + '/integrations')}
+											>
+												edit
+											</DropdownMenu.Item>
+										</DropdownMenu.Content>
+									</DropdownMenu.Root>
+								</div>
+							</Card.Header>
+							{#if data.data?.stores}
 								<Card.Content>
 									<div class="flex flex-row place-content-center pt-6">
 										<form method="POST" action="?/syncKV" use:enhance>
@@ -245,15 +245,31 @@
 								</Card.Content>
 								<Card.Footer class="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
 									<div class="text-xs text-muted-foreground">
-										<Card.Description class="text-base text-sm"
+										<Card.Description class="text-base"
 											>Last sync: {new Date(
 												data.data.stores.updatedAt
 											).toLocaleString()}</Card.Description
 										>
 									</div>
 								</Card.Footer>
-							</Card.Root>
-						{/if}
+							{:else}
+								<Card.Content>
+									<div class="flex flex-row place-content-center pt-6">
+										<Button
+											type="submit"
+											size="lg"
+											on:click={() => goto($page.url + '/integrations')}
+											variant="link">Add a new destination</Button
+										>
+									</div>
+								</Card.Content>
+								<Card.Footer class="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+									<div class="text-xs text-muted-foreground">
+										<Card.Description class="text-base">Last sync: None</Card.Description>
+									</div>
+								</Card.Footer>
+							{/if}
+						</Card.Root>
 					</div>
 				</div>
 				<div class="flex items-center justify-center gap-2 md:hidden">

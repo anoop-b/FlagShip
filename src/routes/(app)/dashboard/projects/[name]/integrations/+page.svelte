@@ -11,7 +11,7 @@
 <div class="m-4 p-4">
 	<Card.Root>
 		<Card.Header>
-			<Card.Title>KV Stores</Card.Title>
+			<Card.Title>Flag Stores</Card.Title>
 			<Card.Description>All stores associated with the project</Card.Description>
 		</Card.Header>
 		{#if data.data?.stores}
