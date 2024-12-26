@@ -1,15 +1,17 @@
 # FlagShip
 
-An edge-first Feature Flag Management application. Runs entirely on Cloudflare's platform.
+An edge-first Feature Flag Management application [WIP].
 
-![FlagShip Architecture](arch.png)
+A Scalable Feature Flag service you run yourself on Cloudflare.
+
+![FlagShip Architecture](./img/arch.png)
 
 ## Pre-Requisites:
 
 - Working cloudflare account
 - Setup D1 and KV on cloudflare account, Either through CLI or through dashboard
 - Setup Cloudflare Zero trust access for the application domain (this is to delegate the auth functionality to cloudflare)
-- Setup the following env variables:
+- Setup the following env variables in a `.env` file in the root of the project:
 
 ```bash
 
@@ -49,6 +51,12 @@ You can preview the production build with `npm run preview`.
 
 ## Notes
 
+<details><summary>Application Screenshot</summary>
+
+![App screenshot](./img/ss.png)
+
+</details>
+
 ### Motivation
 
 This project was created as part my Master's Thesis. The initial idea was to evaluate the feasibility of running a stateful workload on the edge using commertially available tools and services and compare it againt traditional non serverless (and non edge based) workloads.
@@ -57,4 +65,14 @@ I also did notice that Cloudflare doesn't have an offering for Feature Flag mana
 
 On further digging, I found some more interesting advantages of running a Feature flag service at the edge. Apart from the obvious advantage of reduced latency, it can also be combined with server-side rendering to provide a more efficient and faster experience to the end user.
 
-![feature flags at the edge](edgeFF.png)
+![feature flags at the edge](./img/edgeFF.png)
+
+### Stack Used
+
+- [SvelteKit](https://svelte.dev/docs/kit/introduction)
+- [Cloudflare Workers](https://workers.cloudflare.com/)
+- [Cloudflare KV](https://developers.cloudflare.com/kv/)
+- [Cloudflare D1](https://developers.cloudflare.com/d1/)
+- [Cloudflare ZTNA](https://www.cloudflare.com/zero-trust/products/access/)
+- [Drizzle](https://developers.cloudflare.com/d1/)
+- [shadcn-svelte](https://next.shadcn-svelte.com/)
