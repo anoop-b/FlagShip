@@ -4,6 +4,14 @@ An edge-first Feature Flag Management application [WIP].
 
 A Scalable Feature Flag service you run yourself on Cloudflare.
 
+![FlagShip](./img/flagShip.gif)
+
+## Architecture
+
+FlagShip is fully serverless and is hosted on cloudflare workers platform. It uses D1 for storing application data and syncs flags specific to each project to a configurable destination.
+
+At the moment, only Cloudflare KV is supported as the sync destination.
+
 ![FlagShip Architecture](./img/arch.png)
 
 ## Pre-Requisites:
